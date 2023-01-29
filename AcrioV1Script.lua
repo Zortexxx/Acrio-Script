@@ -14,22 +14,23 @@ local UI = Atlas.new({
 	end;
 	Discord = "https://discord.gg/zX2CN8B4ZG"; -- works if UseLoader is set to true, will be copied to clipboard if player presses "Copy Invite" button
 })
-local MainPage = UI:CreatePage("Ro-Ghoul")
+local MainPage = UI:CreatePage("Main")
 local MainSection = MainPage:CreateSection("Main")
-local newValue = false
+
+local Running = false
 local TestToggle = MainSection:CreateToggle({
-	Name = "Bypass Speed";
-	Flag = "RoGhoulSpeedToggle1";
+	Name = "Test Toggle";
+	Flag = "TestToggle";
 	Default = false;
 	Callback = function(newValue)
-		print("Toggle:",newValue)
-		UI:Notify({
-			Title = "Ro-Ghoul";
-			Content = "Speed Toggled";
-		})
-		while newValue == true do
+		Running = newValue
+		while Running == true do
 			wait()
 			game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100
+			if Running == false then
+				game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 50
+				break
+			end
 		end
 	end,
 })
